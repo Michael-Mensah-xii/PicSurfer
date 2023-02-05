@@ -10,10 +10,9 @@ import com.example.picsurfer.data.remote.UnsplashApi
 import com.example.picsurfer.model.UnsplashImage
 import com.example.picsurfer.model.UnsplashRemoteKeys
 import com.example.picsurfer.util.Constants.ITEMS_PER_PAGE
-import javax.inject.Inject
 
 @ExperimentalPagingApi
-class UnsplashRemoteMediator @Inject constructor(
+class UnsplashRemoteMediator(
     private val unsplashApi: UnsplashApi,
     private val unsplashDatabase: UnsplashDatabase,
 
