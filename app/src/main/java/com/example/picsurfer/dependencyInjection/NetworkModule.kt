@@ -40,8 +40,8 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(OkHttpClient())
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .client(okHttpClient)
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
 

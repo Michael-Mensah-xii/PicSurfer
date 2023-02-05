@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "14b849c72ccd3c44a2888050004279e6",
+    "identityHash": "ecd23c32c6672b332a4f600052810c4b",
     "entities": [
       {
-        "tableName": "unsplash_image_table ",
+        "tableName": "unsplash_image_table",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `likes` INTEGER NOT NULL, `regular` TEXT NOT NULL, `username` TEXT NOT NULL, `html` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -49,7 +49,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "unsplash_remote_keys _table ",
+        "tableName": "unsplash_remote_keys_table",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `prevPage` INTEGER, `nextPage` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '14b849c72ccd3c44a2888050004279e6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ecd23c32c6672b332a4f600052810c4b')"
     ]
   }
 }

@@ -8,9 +8,10 @@ val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 val HeartRed = Color(0xFFFF4444)
+val Bar = Color(0xFF9C27B0)
 
 val Colors.topAppBarContentColor: Color
     get() = if (isLight) Color.White else Color.LightGray
 
 val Colors.topAppBarBackgroundColor: Color
-    get() = if (isLight) Purple500 else Color.Black
+    get() = if (isLight) Bar else Color.Black

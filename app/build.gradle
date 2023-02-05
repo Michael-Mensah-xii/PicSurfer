@@ -10,13 +10,13 @@ android {
     namespace 'com.example.picsurfer'
     compileSdk 33
 
-    //added
+  /*  //added
     kapt {
         arguments {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
     }
-
+*/
     defaultConfig {
         applicationId "com.example.picsurfer"
         minSdk 21

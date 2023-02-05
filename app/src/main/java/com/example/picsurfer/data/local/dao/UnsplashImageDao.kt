@@ -1,5 +1,6 @@
 package com.example.picsurfer.data.local.dao
 
+import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -9,12 +10,12 @@ import com.example.picsurfer.model.UnsplashImage
 
 @Dao
 interface UnsplashImageDao {
-    @Query("SELECT * FROM `unsplash_image_table `")
-    fun getAllImages(): PagingSource<Int,UnsplashImage>
+    @Query("SELECT * FROM unsplash_image_table")
+    fun getAllImages(): PagingSource<Int, UnsplashImage>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addImages(images: List<UnsplashImage>)
 
-    @Query("DELETE FROM `unsplash_image_table `")
+    @Query("DELETE FROM unsplash_image_table")
     suspend fun deleteAllImages()
 }

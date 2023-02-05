@@ -43,7 +43,7 @@ fun ListContent(items: LazyPagingItems<UnsplashImage>) {
     Log.d("Error", items.loadState.toString())
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(all = 12.dp),
+        contentPadding = PaddingValues(all = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(
@@ -60,28 +60,24 @@ fun ListContent(items: LazyPagingItems<UnsplashImage>) {
 @ExperimentalCoilApi
 @Composable
 fun UnsplashItem(unsplashImage: UnsplashImage) {
+
     val model = ImageRequest.Builder(LocalContext.current)
+
         .data(unsplashImage.urls.regular)
         .crossfade(true)
+        .placeholder(R.drawable.ic_placeholder)
+        .error(R.drawable.ic_placeholder)
         .build()
 
-
     val painter = rememberAsyncImagePainter(model)
-
-   /* val painter = rememberAsyncImagePainter(data = unsplashImage.urls.regular) {
-        crossfade(durationMillis = 1000)
-        error(R.drawable.ic_placeholder)
-        placeholder(R.drawable.ic_placeholder)
-    }*/
-
-
     val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .clickable {
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://unsplash.com/@${unsplashImage.user.username}?utm_source=DemoApp&utm_medium=referral")
+                    Uri.parse("https://unsplash.com/@${unsplashImage.user.username}?utm_source=PicSurfer&utm_medium=referral")
                 )
                 startActivity(context, browserIntent, null)
             }
@@ -133,12 +129,11 @@ fun UnsplashItem(unsplashImage: UnsplashImage) {
 }
 
 
-
 @Composable
 fun LikeCounter(
     modifier: Modifier,
     painter: Painter,
-    likes: String
+    likes: String,
 ) {
     Row(
         modifier = modifier.fillMaxSize(),
