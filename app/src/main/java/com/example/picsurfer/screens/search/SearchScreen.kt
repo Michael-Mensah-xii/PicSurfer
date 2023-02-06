@@ -1,37 +1,45 @@
-package com.example.picsurfer.screens.home
+package com.example.picsurfer.screens.search
 
 import android.annotation.SuppressLint
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
-import com.example.picsurfer.navigation.Screen
 import com.example.picsurfer.screens.common.ListContent
 
-//check
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@ExperimentalCoilApi
 @ExperimentalPagingApi
+@ExperimentalCoilApi
 @Composable
-fun HomeScreen(
+fun SearchScreen(
     navController: NavHostController,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    searchViewModel: SearchViewModel = hiltViewModel()
 ) {
-    val getAllImages = homeViewModel.getAllImages.collectAsLazyPagingItems()
+    val searchQuery by searchViewModel.searchQuery
+    val searchedImages = searchViewModel.searchedImages.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
-            HomeTopBar(
+            SearchWidget(
+                text = searchQuery,
+                onTextChange = {
+                    searchViewModel.updateSearchQuery(query = it)
+                },
                 onSearchClicked = {
-                    navController.navigate(Screen.Search.route)
+                    searchViewModel.searchStuff(query = it)
+                },
+                onCloseClicked = {
+                    navController.popBackStack()
                 }
             )
         },
         content = {
-            ListContent(items = getAllImages)
+            ListContent(items = searchedImages)
         }
     )
 }

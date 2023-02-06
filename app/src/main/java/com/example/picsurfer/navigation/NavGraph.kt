@@ -1,4 +1,4 @@
-package com.example.picsurfer.model.navigation
+package com.example.picsurfer.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.paging.ExperimentalPagingApi
 import coil.annotation.ExperimentalCoilApi
 import com.example.picsurfer.screens.home.HomeScreen
+import com.example.picsurfer.screens.search.SearchScreen
 
 @ExperimentalCoilApi
 @ExperimentalPagingApi
@@ -20,7 +21,7 @@ fun SetUpNavGraph(navController: NavHostController){
             HomeScreen(navController=navController)
         }
         composable(route= Screen.Search.route){
-      //      SearchScreen(navController=navController)
+           SearchScreen(navController=navController)
         }
     }
 }

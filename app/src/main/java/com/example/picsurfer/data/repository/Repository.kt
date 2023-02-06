@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.picsurfer.data.local.dao.UnsplashDatabase
+import com.example.picsurfer.data.paging.SearchPagingSource
 import com.example.picsurfer.data.paging.UnsplashRemoteMediator
 import com.example.picsurfer.data.remote.UnsplashApi
 import com.example.picsurfer.model.UnsplashImage
@@ -13,11 +14,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
-
 @ExperimentalPagingApi
 class Repository @Inject constructor(
     private val unsplashApi: UnsplashApi,
-    private val unsplashDatabase: UnsplashDatabase
+    private val unsplashDatabase: UnsplashDatabase,
 ) {
 
     fun getAllImages(): Flow<PagingData<UnsplashImage>> {
@@ -28,10 +28,17 @@ class Repository @Inject constructor(
             pagingSourceFactory = pagingSourceFactory
         ).flow
     }
+
+    fun searchImages(query: String): Flow<PagingData<UnsplashImage>> {
+        return Pager(
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            pagingSourceFactory = {
+                SearchPagingSource(unsplashApi = unsplashApi, query = query)
+            }
+        ).flow
+
+    }
 }
-
-
-
 
 
 /*
@@ -52,29 +59,24 @@ class Repository @Inject constructor(
 }*/
 
 
-
-
-
-
 /**
 @ExperimentalPagingApi
 class Repository @Inject constructor(
-    private val unsplashApi: UnsplashApi,
-    private val unsplashDatabase: UnsplashDatabase
+private val unsplashApi: UnsplashApi,
+private val unsplashDatabase: UnsplashDatabase
 ) {
-    fun getAllImages(): Flow<PagingData<UnsplashImage>> {
-        val pagingSource = unsplashDatabase.unsplashImageDao().getAllImages()
-        return Pager(
-            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
-            remoteMediator = UnsplashRemoteMediator(
-                unsplashApi = unsplashApi,
-                unsplashDatabase = unsplashDatabase
-            ),
-            pagingSourceFactory = { pagingSource }
-        ).flow
-    }
+fun getAllImages(): Flow<PagingData<UnsplashImage>> {
+val pagingSource = unsplashDatabase.unsplashImageDao().getAllImages()
+return Pager(
+config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+remoteMediator = UnsplashRemoteMediator(
+unsplashApi = unsplashApi,
+unsplashDatabase = unsplashDatabase
+),
+pagingSourceFactory = { pagingSource }
+).flow
+}
 }**/
-
 
 
 /* fun searchImages(query: String): Flow<PagingData<UnsplashImage>> {

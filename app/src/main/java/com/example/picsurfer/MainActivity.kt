@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.ExperimentalPagingApi
-import com.example.picsurfer.model.navigation.SetUpNavGraph
+import com.example.picsurfer.navigation.SetUpNavGraph
 import com.example.picsurfer.ui.theme.PicSurferTheme
 import dagger.hilt.android.AndroidEntryPoint
 

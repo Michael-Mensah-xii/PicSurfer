@@ -1,6 +1,6 @@
 package com.example.picsurfer.data.remote
 
-import android.app.appsearch.SearchResult
+import com.example.picsurfer.model.SearchResult
 import com.example.picsurfer.BuildConfig
 import com.example.picsurfer.model.UnsplashImage
 import retrofit2.http.GET
@@ -23,7 +23,7 @@ interface UnsplashApi {
     @Headers("Authorization: Client-ID ${BuildConfig.API_KEY}")
     @GET("/search/photos")
     suspend fun searchImages(
-        @Query("page") page: Int,
+        @Query("query") query: String,
         @Query("per_page") perPage: Int,
     ): SearchResult
 
