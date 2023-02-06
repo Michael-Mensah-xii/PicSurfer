@@ -20,6 +20,8 @@ class Repository @Inject constructor(
     private val unsplashDatabase: UnsplashDatabase,
 ) {
 
+    /* set up a remoteMediator using the UnsplashRemoteMediator class to load
+      additional pages from the Unsplash API when needed*/
     fun getAllImages(): Flow<PagingData<UnsplashImage>> {
         val pagingSourceFactory = { unsplashDatabase.unsplashImageDao().getAllImages() }
         return Pager(
@@ -39,52 +41,3 @@ class Repository @Inject constructor(
 
     }
 }
-
-
-/*
-@ExperimentalPagingApi
-class Repository @Inject constructor(
-    private val unsplashApi: UnsplashApi,
-    private val unsplashDatabase: UnsplashDatabase
-) {
-
-    fun getAllImages(): Flow<PagingData<UnsplashImage>> {
-        val pagingSourceFactory = { unsplashDatabase.unsplashImageDao().getAllImages() }
-        return Pager(
-            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
-            remoteMediator = UnsplashRemoteMediator(unsplashApi, unsplashDatabase),
-            pagingSourceFactory = pagingSourceFactory
-        ).flow
-    }
-}*/
-
-
-/**
-@ExperimentalPagingApi
-class Repository @Inject constructor(
-private val unsplashApi: UnsplashApi,
-private val unsplashDatabase: UnsplashDatabase
-) {
-fun getAllImages(): Flow<PagingData<UnsplashImage>> {
-val pagingSource = unsplashDatabase.unsplashImageDao().getAllImages()
-return Pager(
-config = PagingConfig(pageSize = ITEMS_PER_PAGE),
-remoteMediator = UnsplashRemoteMediator(
-unsplashApi = unsplashApi,
-unsplashDatabase = unsplashDatabase
-),
-pagingSourceFactory = { pagingSource }
-).flow
-}
-}**/
-
-
-/* fun searchImages(query: String): Flow<PagingData<UnsplashImage>> {
-     return Pager(
-         config = PagingConfig(pageSize = ITEMS_PER_PAGE),
-         pagingSourceFactory = {
-             SearchPagingSource(unsplashApi = unsplashApi, query = query)
-         }
-     ).flow
- }*/
-

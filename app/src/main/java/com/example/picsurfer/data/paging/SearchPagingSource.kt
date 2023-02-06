@@ -6,7 +6,7 @@ import com.example.picsurfer.util.Constants.ITEMS_PER_PAGE
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 
-
+// loading and refreshing pages of data from the Unsplash API and providing it to the "Paging" library.
 class SearchPagingSource(
     private val unsplashApi: UnsplashApi,
     private val query: String

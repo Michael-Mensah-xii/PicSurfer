@@ -36,7 +36,7 @@ import com.example.picsurfer.model.Urls
 import com.example.picsurfer.model.User
 import com.example.picsurfer.model.UserLinks
 import com.example.picsurfer.ui.theme.HeartRed
-
+//Display images(items) in a lazy column
 @ExperimentalCoilApi
 @Composable
 fun ListContent(items: LazyPagingItems<UnsplashImage>) {
