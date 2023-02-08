@@ -1,5 +1,5 @@
 ## PicSurfer
-Project for studying app architecture using the Unsplash Api to display images from https://unsplash.com API 
+Project for studying app architecture using the Unsplash API to display images from https://unsplash.com 
 
 ## Installation
 * Install Android Studio on any compatible device
