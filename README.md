@@ -18,3 +18,7 @@ Project for studying app architecture using the Unsplash API to display images f
 
 ## App Screenshots
 <img src= "https://user-images.githubusercontent.com/95852329/217399170-cb16d941-36bd-4f50-b63d-db08ab22998e.png" width="340px" />  <img src= "https://user-images.githubusercontent.com/95852329/217399010-38c43962-a4a2-49e7-9746-a62138b2e207.png" width="340px" />
+
+## App Visual
+https://github.com/Michael-Mensah-xii/PicSurfer/assets/95852329/f1682da4-e6c1-4147-8c0c-3e75312eadc0
+
