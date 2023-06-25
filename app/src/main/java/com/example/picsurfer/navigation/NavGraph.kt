@@ -18,10 +18,10 @@ fun SetUpNavGraph(navController: NavHostController){
         startDestination = Screen.Home.route
     ){
         composable(route= Screen.Home.route){
-            HomeScreen(navController=navController)
+            HomeScreen(openSearchScreen = {navController.navigate(Screen.Search.route)})
         }
         composable(route= Screen.Search.route){
-           SearchScreen(navController=navController)
+           SearchScreen(popBackStack = {navController.popBackStack()})
         }
     }
 }
