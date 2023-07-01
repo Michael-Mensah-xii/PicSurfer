@@ -24,7 +24,6 @@ fun SearchScreen(
             SearchWidget(
                 text = searchViewModel.searchQuery,
                 onTextChange = {
-                    // searchQuery = it
                     searchViewModel.updateSearchQuery(query = it)
                 },
                 onSearchClicked = {

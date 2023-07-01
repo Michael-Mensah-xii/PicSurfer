@@ -22,6 +22,10 @@ class Repository @Inject constructor(
 
     /* set up a remoteMediator using the UnsplashRemoteMediator class to load
       additional pages from the Unsplash API when needed*/
+
+/**The getAllImages function uses the remote mediator to fetch the data from the unsplashApi
+ * and store the result of the request into the unsplashDatabase*/
+
     fun getAllImages(): Flow<PagingData<UnsplashImage>> {
         val pagingSourceFactory = { unsplashDatabase.unsplashImageDao().getAllImages() }
         return Pager(

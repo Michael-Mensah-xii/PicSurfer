@@ -10,6 +10,10 @@ import com.example.picsurfer.data.remote.UnsplashApi
 import com.example.picsurfer.model.UnsplashImage
 import com.example.picsurfer.model.UnsplashRemoteKeys
 import com.example.picsurfer.util.Constants.ITEMS_PER_PAGE
+/** The main purpose of the remote mediator is to request new data from the API and cache the response in
+ *  the local database hence not showing the data directly from the API but the local database acting as the
+ *  single source of truth( data is stored in one central location)
+ **/
 
 @ExperimentalPagingApi
 class UnsplashRemoteMediator(
@@ -17,8 +21,9 @@ class UnsplashRemoteMediator(
     private val unsplashDatabase: UnsplashDatabase,
 
     ) : RemoteMediator<Int, UnsplashImage>() {
+    //these variables are responsible for saving the images and their remote keys from the API
     private val unsplashImageDao = unsplashDatabase.unsplashImageDao()
-    private val unsplashRemoteKeysDao = unsplashDatabase.unsplashRemoteKeysDao()
+    private val unsplashRemoteKeysDao = unsplashDatabase.unsplashRemoteKeysDao()//tell remote mediator which page to load next
 
     override suspend fun load(
         loadType: LoadType,
@@ -26,11 +31,14 @@ class UnsplashRemoteMediator(
     ): MediatorResult {
 
         return try {
+            // get current page value based on load-type
             val currentPage = when (loadType) {
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                    remoteKeys?.nextPage?.minus(1) ?: 1
+                    remoteKeys?.nextPage?.minus(1) ?: 1 //if the next page value from remote keys table is null set 1 as default page
                 }
+
+                //load data at the start of paging data
                 LoadType.PREPEND -> {
                     val remoteKeys = getRemoteKeyForFirstItem(state)
                     val prevPage = remoteKeys?.prevPage
@@ -39,6 +47,8 @@ class UnsplashRemoteMediator(
                         )
                     prevPage
                 }
+
+                //load data at the end of paging data
                 LoadType.APPEND -> {
                     val remoteKeys = getRemoteKeyForLastItem(state)
                     val nextPage = remoteKeys?.nextPage
@@ -51,16 +61,21 @@ class UnsplashRemoteMediator(
 
             //make GET request to  photos endpoint
             val response = unsplashApi.getAllImages(page = currentPage, perPage = ITEMS_PER_PAGE)
-            val endOfPaginationReached = response.isEmpty()
+            val endOfPaginationReached = response.isEmpty() //if response is empty no data has been received from the   API so theres no more pages to load
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
             unsplashDatabase.withTransaction {
+                //check if load-type is refresh or invalidate data
                 if (loadType == LoadType.REFRESH) {
+
+                    // and remove records from these database tables
                     unsplashImageDao.deleteAllImages()
                     unsplashRemoteKeysDao.deleteAllRemoteKeys()
                 }
+
+
                 val keys = response.map { unsplashImage ->
                     UnsplashRemoteKeys(
                         id = unsplashImage.id,
@@ -68,6 +83,8 @@ class UnsplashRemoteMediator(
                         nextPage = nextPage
                     )
                 }
+
+                // after successfully mapping the response to remote keys  save the records  to these database tables
                 unsplashRemoteKeysDao.addAllRemoteKeys(remoteKeys = keys)
                 unsplashImageDao.addImages(images = response)
             }

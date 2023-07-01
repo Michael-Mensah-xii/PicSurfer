@@ -11,5 +11,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     repository: Repository
 ): ViewModel() {
+    //call getAllImages function from repository
     val getAllImages = repository.getAllImages()
 }

@@ -1,6 +1,8 @@
 package com.example.picsurfer.screens.search
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
@@ -10,6 +12,7 @@ import com.example.picsurfer.data.repository.Repository
 import com.example.picsurfer.model.UnsplashImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,14 +23,14 @@ class SearchViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _searchQuery = mutableStateOf("")
-    val searchQuery = _searchQuery
+    var searchQuery by mutableStateOf("")
+        private set
 
     private val _searchedImages = MutableStateFlow<PagingData<UnsplashImage>>(PagingData.empty())
-    val searchedImages = _searchedImages
+    val searchedImages = _searchedImages.asStateFlow()
 
     fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
+        searchQuery = query
     }
 
     fun searchStuff(query: String) {
@@ -39,3 +42,4 @@ class SearchViewModel @Inject constructor(
     }
 
 }
+

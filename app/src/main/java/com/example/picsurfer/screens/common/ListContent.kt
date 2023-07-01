@@ -1,8 +1,8 @@
 package com.example.picsurfer.screens.common
 
 import android.content.Intent
+import android.media.Image
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -36,11 +36,12 @@ import com.example.picsurfer.model.Urls
 import com.example.picsurfer.model.User
 import com.example.picsurfer.model.UserLinks
 import com.example.picsurfer.ui.theme.HeartRed
-//Display images(items) in a lazy column
+
+/** ListContent composable is used in both screens to display a list of images in a lazy column*/
+
 @ExperimentalCoilApi
 @Composable
 fun ListContent(items: LazyPagingItems<UnsplashImage>) {
-    Log.d("Error", items.loadState.toString())
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(all = 16.dp),
@@ -52,10 +53,13 @@ fun ListContent(items: LazyPagingItems<UnsplashImage>) {
                 unsplashImage.id
             }
         ) { unsplashImage ->
-            unsplashImage?.let { UnsplashItem(unsplashImage = it) }
+            unsplashImage?.let { UnsplashItem(unsplashImage = it) }//places each image received into UnsplashItem
         }
     }
 }
+
+
+/** UnsplashItem serves as a holder for each image received*/
 
 @ExperimentalCoilApi
 @Composable
@@ -69,11 +73,13 @@ fun UnsplashItem(unsplashImage: UnsplashImage) {
         .error(R.drawable.ic_placeholder)
         .build()
 
+    //asynchronously loads the image and manages its lifecycle(load images only when required)
     val painter = rememberAsyncImagePainter(model)
     val context = LocalContext.current
 
     Box(
         modifier = Modifier
+                // start a browser intent when box is clicked to open author profile
             .clickable {
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
@@ -129,6 +135,7 @@ fun UnsplashItem(unsplashImage: UnsplashImage) {
 }
 
 
+//Like counter composable
 @Composable
 fun LikeCounter(
     modifier: Modifier,

@@ -5,6 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.picsurfer.model.UnsplashRemoteKeys
+/** The remote keys are used to keep track of key values such as id, previous and the next items in a current list of loaded data */
+
 
 @Dao
 interface UnsplashRemoteKeysDao {
@@ -13,9 +15,9 @@ interface UnsplashRemoteKeysDao {
     suspend fun getRemoteKeys(id: String): UnsplashRemoteKeys
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addAllRemoteKeys(remoteKeys: List<UnsplashRemoteKeys>)
+    suspend fun addAllRemoteKeys(remoteKeys: List<UnsplashRemoteKeys>)// insert a list of remote keys
 
     @Query("DELETE FROM unsplash_remote_keys_table")
-    suspend fun deleteAllRemoteKeys()
+    suspend fun deleteAllRemoteKeys()// delete all records from remote keys table
 
 }
